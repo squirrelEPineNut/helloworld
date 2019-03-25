@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.squirrel.mapper.GirlMapper">
+<insert id="insert">
+    insert into girl (last_name,flower,birthday) values (#{lastName},#{flower},#{birthday})
+</insert>
+    <select id="queryById" resultType="girl">
+        select * from girl where id = #{id}
+    </select>
+    <select id="queryByName" resultType="girl">
+        select * from girl where last_name = #{name}
+    </select>
+    <!--使用默认的参数风格，非常不友好，这种方式是断然不可取的-->
+    <select id="qureyByNameFlower" resultType="girl">
+        select * from girl where last_name  = #{param1} and flower =#{param2}
+    </select>
+</mapper>

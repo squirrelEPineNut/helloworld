@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--结论：-->
+        <!--外部对的properties文件里面的属性的优先级优先于properties里面的子节点里的属性-->
+    <properties resource="jdbc.properties">
+        <property name="username" value="123456"/>
+    </properties>
+    <settings>
+        <!--开启下划线风格变为驼峰的风格，数据库设计采用下划线风格，javabean采用驼峰风格，不匹配的问题-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <!--类型别名-->
+    <typeAliases>
+        <!--注册一个简写的类名字，可以在其他的mapper文件中被引用-->
+        <!--不推荐使用-->
+        <typeAlias type="com.squirrel.pojo.Girl" alias="girl"/>
+        <!--直接注册整个包，该包之下的所有类都生效，默认规则为简写类名-->
+    </typeAliases>
+   <environments default="dev">
+       <environment id="dev">
+           <transactionManager type="JDBC"></transactionManager>
+           <dataSource type="UNPOOLED">
+               <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=utf8&amp;userSSL=false"/>
+               <property name="driver" value="${driver}"/>
+               <!--可以通过使用${}应用properties里面规定的属性值-->
+               <property name="username" value="${username}"/>
+               <property name="password" value="${password}"/>
+           </dataSource>
+       </environment>
+   </environments>
+    
+    <mappers>
+        <!--不要写. ,要写/-->
+        <!--第一种：通过类路径方式引入XML文件-->
+
+        <!--<mapper resource="com/squirrel/mapper/GirlMapper.xml"></mapper>-->
+        <!--第二种方式：通过URL协议：地址的引入方式-->
+        <!--<mapper url="file:///J:/javaWorkSpace/code/helloworld/src/main/resources/com/squirrel/mapper/GirlMapper.xml"/>-->
+        <!--第三种：通过接口的权限定名引入,必须保持我们的接口和Mapper.xml在同包之下-->
+        <!--<mapper class="com.squirrel.mapper.GirlMapper"/>-->
+        <!--第四种：引入一个包的形式,以后只要是在这个包下新建的Mapper，不需要重新引入-->
+        <package name="com.squirrel.mapper"/>
+    </mappers>
+
+</configuration>
